@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import Flask
-"""web Flask"""
+"""web flasks"""
 
 
 app = Flask(__name__)
