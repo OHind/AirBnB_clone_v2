@@ -1,41 +1,29 @@
 #!/usr/bin/python3
-from flask import Flask, render_template
+"""script that starts a Flask web application"""
 from models import storage
-from models.state import State
-from models.city import City
-
-
+from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def tear_down(self):
-    """web flask"""
+def appcontext_teardown(exc=None):
+    """script that starts a Flask web application"""
     storage.close()
 
 
 @app.route('/states', strict_slashes=False)
-def list_all_states():
-    """web flask"""
-    dict_states = storage.all(State)
-    all_states = []
-    for k, v in dict_states.items():
-        all_states.append(v)
-    return render_template('9-states.html', all_states=all_states)
-
-
 @app.route('/states/<id>', strict_slashes=False)
-def find_state(id):
-    """web flask"""
-    dict_states = storage.all(State)
-    all_states = []
-    all_states_id = []
-    for k, v in dict_states.items():
-        all_states_id.append(v.id)
-        all_states.append(v)
-    return render_template('9-states.html', all_states=all_states,
-                           all_states_id=all_states_id, id=id)
+def conditional_templating(id=None):
+    """script that starts a Flask web application"""
+    states = storage.all("State")
+    if id is None:
+        return render_template('9-states.html',
+                               states=states)
+    state = states.get('State.' + id)
+    return render_template('9-states.html',
+                           state=state)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
