@@ -1,15 +1,22 @@
 #!/usr/bin/python3
-""" script that starts a Flask web application"""
-
+"""script that starts a Flask web application"""
+from models import storage
 from flask import Flask
 from flask import render_template
-
-
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 
 
-#@app.route()
+@app.teardown_appcontext
+def appcontext_teardown(exc=None):
+    """script that starts a Flask web application"""
+    storage.close()
+
+
+@app.route('/states_list', strict_slashes=False)
+def conditional_templating(n=None):
+    """script that starts a Flask web application"""
+    return render_template('7-states_list.html',
+                           states=storage.all("State"))
 
 
 if __name__ == '__main__':
