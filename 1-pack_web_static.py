@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""script that generates a .tgz archive"""
+"""Fabric script that generates a .tgz archive from the contents of the web_static folder"""
 from datetime import datetime
 from fabric.api import local
 from os.path import isdir
